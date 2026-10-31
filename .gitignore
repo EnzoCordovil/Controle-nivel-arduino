@@ -1,0 +1,7 @@
+teste_logica
+teste_tanque
+__pycache__/
+*.pyc
+*.o
+*.elf
+*.hex

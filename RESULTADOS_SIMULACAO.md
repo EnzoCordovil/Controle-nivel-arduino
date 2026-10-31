@@ -1,0 +1,53 @@
+# Resultados — níveis 1 / 2 / 2,5 L e extravasor em 2,8 L
+
+## Procedimento
+
+A versão candidata foi testada antes de substituir os arquivos entregues. O teste com timeout de 35 s falhou com o código anterior de 65 s, como esperado; depois da alteração passou. Executado o .ino em C++11 com funções Arduino e EEPROM simuladas, -Wall -Wextra -Werror e UndefinedBehaviorSanitizer. Sem compilação AVR ou validação física.
+
+Foram executados testes de lógica, 18 cenários dinâmicos, 210 combinações de vazão e volume inicial, dez ciclos completos e 100 combinações hidráulicas de sensibilidade. Todos cumpriram suas expectativas explícitas. Os testes de limites reproduzem problemas conhecidos e não representam aprovação dessas falhas.
+
+## Alterações consolidadas após os testes
+
+- Inferior 1 L; superior 2 L; emergência 2,5 L.
+- Dois prazos de supervisão de 35 s (1 L / 2 L/min = 30 s, mais 5 s).
+- Extravasor: tubo vertical aberto, referência de 50 mm internos e crista em 2,8 L; substitui abertura circular alta na parede.
+- Mantidos pinos D2/D3/D5, relé D7, botão D4 e persistência de bloqueio.
+
+## Modelo e hipóteses
+
+Passo de 1 ms, sensores ideais nas referências volumétricas e fechamento da válvula com atraso assumido de 300 ms. Ganho líquido mínimo de cálculo: 2 L/min; entrada entre 3 e 12 L/min. O recipiente é idealizado com 5 L na borda, o que não foi comprovado pelo produto comercial.
+
+Extravasão por modelo de crista circular horizontal: Q = (2/3) Cd pi D sqrt(2g) H^(3/2), limitada à capacidade de condução assumida de 18 L/min. Cd=0,4 no ensaio dinâmico; sensibilidade entre 0,2 e 0,6. A área horizontal do tanque no ensaio dinâmico usa a pegada externa de 848,7 cm² como cenário; outra área equivalente de 438,6 cm² foi examinada na sensibilidade. São modelos de cálculo, não levantamento geométrico. Na montagem, calibrar volumes com o tubo instalado para incluir o deslocamento.
+
+Como conferência de ordem de grandeza, Manning para trecho reto de 50 mm internos, meio cheio, n=0,015 e declividade de 1% dá cerca de 21,15 L/min. O teto de 18 L/min não foi demonstrado para o percurso concreto; curvas, passagem de fundo, ventilação, afogamento e obstruções exigem avaliação. Não se utiliza sifão no modelo. Não foram modeladas tensões mecânicas da parede ou o encaixe de conexões no recipiente.
+
+Bases conceituais públicas: [equação de vertedores, USACE HEC-HMS](https://www.hec.usace.army.mil/confluence/hmsdocs/hmstrm/reservoir-modeling/reservoir-modeling-concepts-and-equations/spillways) e [seleção de vertedores e efeitos de pequena carga, USBR](https://www.usbr.gov/tsc/techreferences/mands/wmm/chap07_16.html). A aplicação em pequena escala é uma aproximação com coeficientes assumidos, não uma calibração fornecida por essas fontes.
+
+## Resultados principais
+
+| Ensaio | Resultado no modelo |
+|---|---|
+| Normal, 6 L/min | Corte normal com máximo de 2,030 L |
+| Normal, 3 L/min | Máximo de 2,015 L, sem bloqueio indevido |
+| Entrada 3 e retirada 1 L/min | Máximo de 2,010 L, sem bloqueio |
+| Entrada 6 e retirada 1 L/min por 10 min | Máximo de 2,025 L, sem bloqueio |
+| Superior falha seco, 12 L/min | Emergência bloqueia, máximo de 2,560 L |
+| Inferior e superior secos, emergência funcional | Emergência bloqueia, máximo de 2,560 L |
+| Superior e emergência secos, 12 L/min, extravasor funcional | Máximo de 3,692 L; bloqueia por tempo e depois escoa |
+| Válvula travada aberta a 12 L/min, extravasor funcional | Equilíbrio em ~3,692 L, comando desligado e bloqueado |
+| Dez ciclos completos | Máximo de 2,030 L |
+| 210 combinações normais (3–12 L/min; início de 0–2 L) | Sem bloqueio indevido, máximos abaixo de 2,07 L |
+| Sensibilidade hidráulica: 100 combinações | Maior equilíbrio calculado: 4,216 L, com Cd=0,2 |
+| Religamento após falha gravada e rearme manual | Comportamento esperado |
+| Oscilações, botão preso, retorno de millis a zero | Comportamento esperado |
+
+## Limites reproduzidos
+
+- Inferior preso indicando água: tanque vazio permanece sem reposição e sem alarme; não é possível identificá-lo inequivocamente só com os sensores altos.
+- Válvula travada e extravasor obstruído: ultrapassa cinco litros. Software não resolve essa combinação.
+- Valores de equilíbrio são condicionais às hipóteses hidráulicas. Alterar a condução, geometria, volume real até a borda ou coeficientes pode mudar o resultado.
+- EEPROM simulada grava instantaneamente; não comprova tolerância a perda de energia durante uma gravação.
+
+## Conclusão
+
+A versão passou nos cenários de operação e de proteção previstos, dentro das premissas do modelo. Texto e código foram atualizados somente depois desses resultados. Isso não equivale a funcionamento universal ou aprovação física do sistema: instalação, capacidade de escoamento, vedação, dimensões reais e alimentação precisam ser verificadas na montagem.
