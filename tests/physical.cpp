@@ -13,10 +13,11 @@ struct Tanque {
  int defeitoInf=0,defeitoSup=0,defeitoEmerg=0;
  bool valvulaTravada=false, extravasorObstruido=false; int comandoAnterior=LOW;
  // Modelo preliminar de tubo vertical aberto de 50 mm internos.
- // Area horizontal deliberadamente igual a pegada EXTERNA (cenario conservador).
+ // Geometria de exemplo: 200 x 125 mm internos.
+ // Acima da crista nao ha mais tubo vertical ocupando a secao do tanque.
  double descarga(){
   if(extravasorObstruido)return 0;
-  const double h=std::max(0.0,(volume-2.8)/1000.0/(.345*.246));
+  const double h=std::max(0.0,(volume-2.8)/1000.0/(.200*.125));
   const double q=(2.0/3.0)*.4*3.141592653589793*.05*std::sqrt(2*9.81)*std::pow(h,1.5);
   return std::min(q*60000.0,18.0); // L/min: capacidade de conducao ASSUMIDA
  }

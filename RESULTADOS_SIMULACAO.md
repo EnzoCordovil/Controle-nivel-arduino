@@ -1,4 +1,30 @@
-# Resultados — níveis 1 / 2 / 2,5 L e extravasor em 2,8 L
+# Resultados atuais — geometria de exemplo de 200 × 125 × 230 mm
+
+A geometria foi escolhida como exemplo, sem vínculo com um recipiente comercial. O código do Arduino mantém os pinos, os volumes de referência e os prazos de 35 segundos. O modelo dinâmico em `tests/physical.cpp` foi atualizado para a área interna de 0,025 m² acima da crista. As alturas consideram tubo com 50 mm internos e 54 mm externos; veja [memória de cálculo](docs/GEOMETRIA_E_CONEXOES.md).
+
+## Verificação repetida em 31/10/2026
+
+Compilação dos testes em C++11 com `-Wall -Wextra -Werror -fsanitize=undefined`; modelo dinâmico também com `-O1`. Os executáveis e os dois testes Python terminaram com código zero. Compilação AVR e ensaios físicos continuam pendentes.
+
+| Verificação | Resultado |
+|---|---|
+| Lógica, partida, filtros, prazos, EEPROM simulada, rearme e retorno de millis | Passou nas verificações implementadas |
+| 18 cenários dinâmicos, incluindo dez ciclos | Resultados esperados |
+| 210 combinações normais de vazão e volume inicial | Sem bloqueios indevidos nas premissas |
+| Normal a 6 L/min | Máximo de 2,030 L |
+| Emergência com falha do superior e entrada de 12 L/min | Máximo de 2,560 L |
+| Superior e emergência falham indicando seco; extravasor funcional | Máximo de 3,063 L |
+| Válvula travada aberta a 12 L/min; extravasor funcional | Equilíbrio de aproximadamente 3,063 L |
+| 50 combinações hidráulicas da geometria de exemplo | Maior equilíbrio de 3,217 L, com Cd=0,2 |
+| Teste das duas geometrias históricas | 100 combinações; maior equilíbrio de 4,216 L |
+| Válvula travada e extravasor obstruído | Modelo ultrapassa 5 L; limitação conhecida |
+| Inferior preso indicando água | Falta de reposição sem diagnóstico; limitação conhecida |
+
+O teste das geometrias históricas foi preservado, mas não representa as dimensões da nova vista 3D. Os números de 3,692 L e 4,216 L registrados abaixo pertencem ao modelo anterior. Para o exemplo atual, o volume geométrico até a borda é 5,468 L sem descontar flanges; 5 L é um limite conservador de cálculo. As hipóteses de Cd, capacidade de condução de pelo menos 18 L/min, ausência de afogamento e válvula com atraso de 300 ms continuam sem validação física.
+
+---
+
+# Registro histórico — geometria preliminar anterior
 
 ## Procedimento
 

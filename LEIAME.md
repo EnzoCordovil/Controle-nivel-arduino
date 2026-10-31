@@ -14,7 +14,7 @@ Abra ControleNivel/ControleNivel.ino no Arduino IDE e selecione Arduino Uno R3 (
 | LED de bloqueio | — | Integrado D13 |
 | Borda do tubo extravasor | 2,8 L | Sem comando elétrico |
 
-Sensores SEN0485, ativos em LOW. Posicionar pelos volumes medidos após instalar o tubo interno, pois ele desloca água. Conferir alcance de detecção de 3 mm, espessura, fixação e interferências. Não converter diretamente litros em centímetros a partir das dimensões externas.
+Sensores SEN0485, ativos em LOW: vermelho = VCC 5 V, preto = GND, verde = OUT. No exemplo de 200 × 125 × 230 mm internos, com tubo de 54 mm externos, as alturas calculadas dos sensores são 44,0 / 88,1 / 110,1 mm; a crista do extravasor fica em 123,3 mm. São dimensões escolhidas para o exemplo, não medições de um produto. Na montagem real, posicionar pelos volumes medidos após instalar o tubo interno, pois ele desloca água. Conferir alcance de detecção de 3 mm, espessura, fixação e interferências. Não converter diretamente litros em centímetros a partir das dimensões externas.
 
 Fonte externa isolada de 12 V / 1 A. Conversor fornece 5 V regulados, capacidade especificada de 1 A. Arduino pela USB; sensores e módulo relé em paralelo na distribuição de 5 V; GND comum do controle. Resistor de 10 kΩ de D7 para GND. Válvula de 12 V pelos contatos COM/NO, NC livre; retorno direto ao negativo da fonte. Diodo 1N4001 em paralelo com a bobina, faixa no positivo após NO. Nunca aplicar 12 V aos pinos de sinal/5 V ou à USB. Desconectar alimentação USB do conversor antes de conectar computador. Fechar proteção contra sobrecorrente e polaridade com a fonte e os fios concretos.
 
@@ -52,5 +52,9 @@ Inferior travado indicando água pode impedir reposição sem alarme. Terceiro s
     g++ -std=c++11 -Wall -Wextra -Werror -Itests tests/physical.cpp -o teste_tanque
     ./teste_tanque
     python3 tests/teste_extravasor.py
+    python3 tests/teste_geometria_exemplo.py
 
 Leia DESCRICAO_PROJETO.md e RESULTADOS_SIMULACAO.md. Compilação AVR e ensaio físico não foram realizados neste ambiente.
+
+
+Veja o [diagrama elétrico e memória de cálculo](docs/GEOMETRIA_E_CONEXOES.md). O esquema é funcional; conferir a identificação dos bornes no módulo concreto.

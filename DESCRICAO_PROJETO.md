@@ -1,6 +1,6 @@
 # Projeto de Controle Automático de Nível de Água
 
-O projeto controla o enchimento de um reservatório plástico transparente, com capacidade nominal de cinco litros e dimensões gerais de referência de 34,5 × 24,6 × 11,4 cm. A água vem de uma torneira, passa por uma válvula solenoide de 12 V CC normalmente fechada e entra por uma conexão fixa na lateral próxima à base.
+O projeto controla o enchimento de um reservatório transparente retangular. A geometria de exemplo adotada tem dimensões internas de 20 × 12,5 × 23 cm; não corresponde a uma medição do recipiente do autor. Com o tubo vertical de referência, a capacidade geométrica líquida até a borda é aproximadamente 5,47 litros, antes de descontar flanges e conexões. Cinco litros são mantidos como limite conservador de cálculo. A água vem de uma torneira, passa por uma válvula solenoide de 12 V CC normalmente fechada e entra por uma conexão fixa na lateral próxima à base.
 
 Três sensores capacitivos externos informam o nível ao Arduino Uno. O controle inicia a reposição quando a água baixa do sensor de referência de 1 litro e encerra quando alcança o sensor de 2 litros. Um terceiro sensor, na referência de 2,5 litros, provoca fechamento e bloqueio de emergência. As alturas de instalação são estabelecidas pelos volumes medidos, com todos os componentes hidráulicos internos já instalados.
 
@@ -15,3 +15,6 @@ O extravasor adota um tubo vertical aberto dentro do reservatório, com diâmetr
 Um dreno manual separado, próximo à base, permite esvaziamento ou transferência. Sua utilização não faz parte do comando eletrônico, mas influencia o ganho líquido de água durante o enchimento.
 
 As simulações de software reproduziram o controle normal e as proteções especificadas. O modelo hidráulico preliminar apresentou equilíbrio abaixo do limite assumido de cinco litros com entrada de até 12 L/min. Esses resultados dependem das hipóteses documentadas no relatório e não representam ensaio físico da montagem, validação da capacidade nominal até a borda ou aprovação de todas as falhas possíveis.
+
+
+A vista 3D, as alturas calculadas para o exemplo e o esquema elétrico estão em [docs/GEOMETRIA_E_CONEXOES.md](docs/GEOMETRIA_E_CONEXOES.md).
