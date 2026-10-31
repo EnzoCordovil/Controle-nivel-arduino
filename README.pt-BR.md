@@ -2,6 +2,8 @@
 
 [English](README.md) | [Português](README.pt-BR.md)
 
+Projeto de portfólio em Engenharia de Controle e Automação que reúne o desenvolvimento de firmware, o dimensionamento elétrico e hidráulico e a verificação por simulação de um sistema de reposição de água.
+
 O Arduino Uno controla a reposição de água no tanque a partir de três sensores capacitivos. Uma válvula solenoide abre a entrada de água, enquanto o programa acompanha os níveis e o tempo de enchimento. Em caso de falha, o sistema fecha a válvula e mantém o bloqueio até o rearme manual.
 
 [![Vista 3D do conjunto hidráulico](docs/Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png)
@@ -18,6 +20,12 @@ O tanque de exemplo tem dimensões internas de 200 × 125 × 230 mm. O tubo extr
 | Borda do extravasor | 2,8 L | 123,3 mm |
 
 A capacidade líquida calculada é de aproximadamente 5,47 L. Os cálculos usam 5 L como limite, deixando uma margem abaixo da borda. Os desenhos estão disponíveis em PNG e SVG.
+
+## Desenvolvimento e resultados
+
+O trabalho reúne a definição dos níveis de operação, a programação do controle e dos bloqueios, a seleção de componentes de referência e os cálculos do tanque e do extravasor. Os desenhos, as memórias de cálculo e os testes reproduzíveis permitem acompanhar as decisões de projeto.
+
+A compilação para Arduino Uno foi concluída com sucesso. No modelo dinâmico, 18 cenários e 210 combinações de operação reproduziram as respostas previstas nas asserções, incluindo situações que evidenciam os limites do sistema. A geometria atual também foi analisada em 50 combinações hidráulicas. Os métodos, as hipóteses e os registros estão na seção de verificação.
 
 ## Conexões elétricas
 
