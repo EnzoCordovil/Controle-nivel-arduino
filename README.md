@@ -116,4 +116,4 @@ Author: Enzo Castro Cordovil.
 - [Verification record and scope](docs/en/ENGINEERING_VERIFICATION.md)
 - [Recorded simulation output](docs/evidencias/simulacao.txt)
 
-Run `bash tests/run_checks.sh` to reproduce the recorded software and hydraulic checks. An Arduino Uno compilation workflow is prepared in `.github/workflows/verify.yml`; AVR compilation is only established after a successful run.
+Run `bash tests/run_checks.sh` to reproduce the software and hydraulic checks. [Arduino Uno compilation and simulations passed](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064) using Arduino CLI 1.2.2 and Arduino AVR Boards 1.8.6. The firmware uses 3,928 bytes of program storage and 387 bytes of static RAM. See the [compilation log](docs/evidencias/compilacao_uno.txt).

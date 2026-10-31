@@ -114,4 +114,4 @@ Autor: Enzo Castro Cordovil.
 - [Registro de verificação e alcance dos resultados](docs/VERIFICACAO_ENGENHARIA.md)
 - [Saída registrada da simulação](docs/evidencias/simulacao.txt)
 
-Execute `bash tests/run_checks.sh` para reproduzir os ensaios de software e hidráulica. A rotina de compilação para Arduino Uno está preparada em `.github/workflows/verify.yml`; a compilação AVR só estará comprovada após uma execução concluída com sucesso.
+Execute `bash tests/run_checks.sh` para reproduzir os ensaios de software e hidráulica. A [compilação para Arduino Uno e as simulações passaram](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064), com Arduino CLI 1.2.2 e Arduino AVR Boards 1.8.6. O firmware usa 3.928 bytes de programa e 387 bytes de RAM estática. Consulte o [log de compilação](docs/evidencias/compilacao_uno.txt).

@@ -77,7 +77,7 @@ python3 tests/teste_extravasor.py
 python3 tests/teste_geometria_exemplo.py
 ```
 
-Read the [project description](PROJECT.md) and [simulation results](SIMULATION_RESULTS.md). AVR compilation and physical testing were not performed in this environment.
+Read the [project description](PROJECT.md) and [simulation results](SIMULATION_RESULTS.md). AVR compilation for Arduino Uno completed successfully in [GitHub Actions](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064). Physical testing has not been performed.
 
 The [electrical diagram and calculation notes](GEOMETRY_AND_WIRING.md) provide the connection details. Check terminal labels on the selected hardware during assembly.
 

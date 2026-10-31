@@ -79,3 +79,7 @@ Conceptual references: [USACE HEC-HMS spillway equations](https://www.hec.usace.
 ### Interpretation
 
 The version passed the specified operating and protection scenarios within the model assumptions. The text and sketch were updated after those results. Installation, discharge capacity, sealing, actual dimensions, and power require checks during assembly; the simulations do not establish universal operation or physical approval.
+
+## Subsequent Arduino Uno verification
+
+The [GitHub Actions run](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064) successfully compiled the same firmware for `arduino:avr:uno` and repeated the simulations using Arduino CLI 1.2.2 and Arduino AVR Boards 1.8.6. See the [engineering record](ENGINEERING_VERIFICATION.md) for memory usage, core warnings and logs. Earlier statements excluding AVR compilation describe historical runs preceding this verification. Physical testing remains outside the scope of the computational results.

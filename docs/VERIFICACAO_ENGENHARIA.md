@@ -43,7 +43,7 @@ A rotina preparada em `.github/workflows/verify.yml` instala Arduino CLI 1.2.2 e
 arduino-cli compile --fqbn arduino:avr:uno --warnings all --output-dir build/uno ControleNivel
 ```
 
-Também foi configurado o armazenamento dos logs, hashes e binários como artefato `engineering-evidence`. A rotina só comprova compilação depois de uma execução concluída com sucesso. Nesta revisão ela foi preparada, mas não executada: a atualização da branch principal foi bloqueada pela revisão automática de autorização. O ambiente local não dispõe do compilador AVR; a tentativa de obter Arduino CLI não disponibilizou o executável.
+A execução [Engineering verification](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064), sobre o commit `8169cd88a1f489e3e2310ccf8a2cd08cb6ddd415`, concluiu com sucesso a compilação para Uno, as simulações e o envio do artefato `engineering-evidence`. O sketch usa 3.928 bytes de programa (12%) e 387 bytes de RAM estática (18%), restando 1.661 bytes para variáveis locais e pilha. Essa folga não é uma medição do uso máximo da pilha. O compilador informou quatro avisos de parâmetro não utilizado em `new.cpp` do core Arduino 1.8.6; não houve erro de compilação. O [log de compilação](evidencias/compilacao_uno.txt) fica preservado no repositório. O artefato da execução contém binários, logs e hashes e está sujeito ao prazo de retenção do GitHub. As simulações repetidas no runner usaram Python 3.12.3 e g++ 13.3.0, mantendo os resultados registrados.
 
 ## Alcance das conclusões
 

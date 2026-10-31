@@ -39,7 +39,7 @@ The prepared workflow `.github/workflows/verify.yml` installs Arduino CLI 1.2.2 
 arduino-cli compile --fqbn arduino:avr:uno --warnings all --output-dir build/uno ControleNivel
 ```
 
-Logs, hashes and binaries are configured for upload as the `engineering-evidence` artifact. This establishes compilation only after a successful workflow run. The workflow was prepared but not executed in this revision: automatic authorization review blocked the main-branch update. The local environment has no AVR compiler, and the Arduino CLI download attempt did not provide an executable.
+The [Engineering verification run](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064), for commit `8169cd88a1f489e3e2310ccf8a2cd08cb6ddd415`, successfully completed Uno compilation, simulations and upload of the `engineering-evidence` artifact. The sketch uses 3,928 bytes of program storage (12%) and 387 bytes of static RAM (18%), leaving 1,661 bytes for local variables and stack. This is not a measured worst-case stack margin. The compiler reported four unused-parameter warnings in `new.cpp` from Arduino core 1.8.6; there were no compilation errors. The [compilation log](../evidencias/compilacao_uno.txt) is preserved in the repository. The run artifact contains binaries, logs and hashes and is subject to GitHub retention settings. The runner repeated the simulations using Python 3.12.3 and g++ 13.3.0 with the same reported results.
 
 ## Scope
 

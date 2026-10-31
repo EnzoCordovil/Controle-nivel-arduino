@@ -81,3 +81,7 @@ Bases conceituais públicas: [equação de vertedores, USACE HEC-HMS](https://ww
 ## Conclusão
 
 A versão passou nos cenários de operação e de proteção previstos, dentro das premissas do modelo. Texto e código foram atualizados somente depois desses resultados. Isso não equivale a funcionamento universal ou aprovação física do sistema: instalação, capacidade de escoamento, vedação, dimensões reais e alimentação precisam ser verificadas na montagem.
+
+## Verificação posterior para Arduino Uno
+
+A [execução no GitHub Actions](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064) compilou o mesmo firmware para `arduino:avr:uno` com sucesso e repetiu as simulações. Foram usados Arduino CLI 1.2.2 e Arduino AVR Boards 1.8.6. Consulte o [registro de engenharia](docs/VERIFICACAO_ENGENHARIA.md) para memória utilizada, avisos do core e logs. Os relatos anteriores de ausência de compilação AVR descrevem as execuções históricas, anteriores a esta verificação. Ensaios físicos continuam fora do escopo dos resultados computacionais.

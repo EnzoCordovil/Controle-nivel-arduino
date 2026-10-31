@@ -1,0 +1,28 @@
+Arduino Uno compilation evidence
+Source commit: 8169cd88a1f489e3e2310ccf8a2cd08cb6ddd415
+Run: https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064
+Job: verify (success)
+Source SHA-256: 500e459899a0b11b4aed3d9126d9acf1d363b688209859ccfe0785e8e7f47400
+
+arduino-cli  Version: 1.2.2 Commit: c11b9dd5 Date: 2025-04-22T13:51:01Z
+ID          Installed Latest Name
+arduino:avr 1.8.6     1.8.8  Arduino AVR Boards
+
+/home/runner/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/new.cpp: In function 'void* operator new(std::size_t, std::nothrow_t)':
+/home/runner/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/new.cpp:59:60: warning: unused parameter 'tag' [-Wunused-parameter]
+ void * operator new(std::size_t size, const std::nothrow_t tag) noexcept {
+                                                            ^~~
+/home/runner/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/new.cpp: In function 'void* operator new [](std::size_t, const std::nothrow_t&)':
+/home/runner/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/new.cpp:68:63: warning: unused parameter 'tag' [-Wunused-parameter]
+ void * operator new[](std::size_t size, const std::nothrow_t& tag) noexcept {
+                                                               ^~~
+/home/runner/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/new.cpp: In function 'void operator delete(void*, const std::nothrow_t&)':
+/home/runner/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/new.cpp:103:55: warning: unused parameter 'tag' [-Wunused-parameter]
+ void operator delete(void* ptr, const std::nothrow_t& tag) noexcept {
+                                                       ^~~
+/home/runner/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/new.cpp: In function 'void operator delete [](void*, const std::nothrow_t&)':
+/home/runner/.arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/new.cpp:106:57: warning: unused parameter 'tag' [-Wunused-parameter]
+ void operator delete[](void* ptr, const std::nothrow_t& tag) noexcept {
+                                                         ^~~
+Sketch uses 3928 bytes (12%) of program storage space. Maximum is 32256 bytes.
+Global variables use 387 bytes (18%) of dynamic memory, leaving 1661 bytes for local variables. Maximum is 2048 bytes.

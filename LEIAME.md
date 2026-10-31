@@ -73,7 +73,7 @@ O tubo ocupa parte do volume e precisa caber junto com as conexões, os suportes
     python3 tests/teste_extravasor.py
     python3 tests/teste_geometria_exemplo.py
 
-Leia DESCRICAO_PROJETO.md e RESULTADOS_SIMULACAO.md. Compilação AVR e ensaio físico não foram realizados neste ambiente.
+Leia DESCRICAO_PROJETO.md e RESULTADOS_SIMULACAO.md. A compilação AVR para Arduino Uno foi concluída com sucesso no [GitHub Actions](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064). Ensaios físicos não foram realizados.
 
 Consulte o [diagrama elétrico e a memória de cálculo](docs/GEOMETRIA_E_CONEXOES.md). Na montagem, confira a identificação dos bornes no módulo escolhido.
 
