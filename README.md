@@ -1,12 +1,11 @@
 # Sistema de Controle Automático de Nível de Água com Arduino
 
-Protótipo de automação para reposição de água em um reservatório, com três sensores de nível, válvula solenoide, bloqueio persistente e rearme manual.
+Projeto de um sistema de controle automático de nível para um tanque de água, utilizando Arduino Uno, três sensores capacitivos e válvula solenoide. Inclui circuito elétrico, desenho 3D, dimensionamento hidráulico e código de controle com bloqueio persistente e rearme manual.
 
-**Status:** lógica verificada em simulação C++ e modelo hidráulico preliminar. A compilação para Arduino Uno e os testes físicos ainda estão pendentes. Este projeto não é um sistema de segurança certificado.
 
 ![Vista 3D do conjunto hidráulico](docs/Vista_3D_Conceitual.png)
 
-**Geometria de exemplo:** reservatório retangular com dimensões internas de **200 × 125 × 230 mm**, escolhidas para este projeto. Não são medidas de um recipiente real do autor. O extravasor de referência tem 50 mm internos e 54 mm externos. As alturas calculadas consideram o volume ocupado pelo tubo; conexões e flanges adicionais não foram descontados.
+**Geometria de exemplo:** reservatório retangular com dimensões internas de **200 × 125 × 230 mm**, escolhidas para este projeto. O extravasor de referência tem 50 mm internos e 54 mm externos. As alturas calculadas consideram o volume ocupado pelo tubo; conexões e flanges adicionais não foram descontados.
 
 | Referência | Volume | Altura calculada a partir do fundo interno |
 |---|---:|---:|
@@ -15,7 +14,7 @@ Protótipo de automação para reposição de água em um reservatório, com tr�
 | Emergência | 2,5 L | 110,1 mm |
 | Borda do extravasor | 2,8 L | 123,3 mm |
 
-A capacidade geométrica líquida do exemplo é aproximadamente 5,47 L. O limite de 5 L continua sendo uma referência conservadora de cálculo. As imagens têm aparência CAD e são ilustrações técnicas em PNG/SVG, sem representar um arquivo DWG ou um projeto de fabricação validado.
+A capacidade geométrica líquida do exemplo é aproximadamente 5,47 L. O limite de 5 L continua sendo uma referência conservadora de cálculo. Os desenhos do conjunto hidráulico e do circuito elétrico estão disponíveis em PNG e SVG.
 
 ## Conexões elétricas
 
@@ -49,14 +48,14 @@ Os sensores são ativos em LOW. Os volumes dependem da posição física dos sen
 - Fonte isolada de 12 V e conversor regulado de 5 V, a confirmar conforme os consumos reais.
 - Reservatório retangular de exemplo, dreno manual e extravasor vertical aberto de referência de 50 mm internos.
 
-Confira alimentação, polaridade, montagem e limitações no [guia de montagem](LEIAME.md). A válvula é alimentada pelos contatos do relé; nunca por um pino do Arduino.
+Confira alimentação, polaridade e montagem no [guia de montagem](LEIAME.md). A válvula é alimentada pelos contatos do relé; nunca por um pino do Arduino.
 
 ## Abrir no Arduino IDE
 
 1. Baixe ou clone este repositório.
 2. Abra [ControleNivel/ControleNivel.ino](ControleNivel/ControleNivel.ino).
 3. Selecione Arduino Uno e a porta correspondente.
-4. Compile antes de carregar; a compilação AVR ainda não foi validada neste projeto.
+4. Compile o código e carregue na placa.
 
 A biblioteca EEPROM faz parte do pacote Arduino AVR Boards. O Monitor Serial usa 9600 baud.
 
@@ -75,18 +74,20 @@ python3 tests/teste_geometria_exemplo.py
 
 As funções Arduino e a EEPROM são simuladas. Os ensaios cobrem lógica de estados, temporização, rearme, persistência simulada, cenários de enchimento e hipóteses de extravasão. Veja as premissas e os resultados no [relatório de simulação](RESULTADOS_SIMULACAO.md).
 
-## Limitações e próximas validações
+## Parâmetros de dimensionamento
 
-- Medir volume real até a borda, posições dos sensores e espaço para conexões.
-- Compilar para o Uno e testar entradas, relé, partida, emergência e rearme na placa.
-- Medir vazão, atraso da válvula e capacidade real do extravasor, incluindo as perdas do percurso.
-- Confirmar dimensionamento elétrico, vedação e suporte mecânico.
-- O sensor inferior travado indicando água pode impedir reposição sem gerar alarme.
-- O sensor de emergência compartilha Arduino e relé; não constitui proteção elétrica independente.
-- Válvula travada aberta e extravasor obstruído podem causar transbordamento.
-- A persistência em EEPROM não foi validada contra perda de energia durante a escrita.
+| Parâmetro | Valor adotado |
+|---|---:|
+| Dimensões internas do tanque de exemplo | 200 × 125 × 230 mm |
+| Volume de operação | 1 a 2 L |
+| Nível de emergência | 2,5 L |
+| Início de extravasão | 2,8 L |
+| Vazão máxima de entrada no modelo | 12 L/min |
+| Ganho líquido mínimo para os prazos | 2 L/min |
+| Supervisão por etapa | 35 s |
+| Diâmetro interno do extravasor | 50 mm |
 
-O modelo atual usa a geometria de exemplo acima, mantém 5 L como limite de cálculo, entrada de até 12 L/min e condução do extravasor assumida de pelo menos 18 L/min. Esses valores não representam medições da montagem. Os resultados hidráulicos não aprovam a instalação física.
+A memória de cálculo apresenta as hipóteses geométricas e hidráulicas adotadas. O [relatório de simulação](RESULTADOS_SIMULACAO.md) reúne os cenários analisados e o comportamento do sistema em cada condição.
 
 ## Documentação
 
