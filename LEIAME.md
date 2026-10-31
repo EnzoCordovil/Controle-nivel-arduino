@@ -1,5 +1,7 @@
 # Montagem e configuração do controle de nível
 
+[English](docs/en/ASSEMBLY.md) | [Português](LEIAME.md)
+
 Abra `ControleNivel/ControleNivel.ino` no Arduino IDE e selecione Arduino Uno R3 (ATmega328P). A biblioteca EEPROM acompanha o pacote Arduino AVR Boards; o código não usa bibliotecas externas.
 
 ## Pinos e níveis

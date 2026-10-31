@@ -1,5 +1,7 @@
 # Projeto de controle automático de nível de água
 
+[English](docs/en/PROJECT.md) | [Português](DESCRICAO_PROJETO.md)
+
 O sistema controla o enchimento de um tanque retangular transparente. Para o exemplo, foram escolhidas dimensões internas de 20 × 12,5 × 23 cm. Com o tubo extravasor instalado, o volume calculado até a borda é de aproximadamente 5,47 litros, sem descontar flanges e outras conexões. Os cálculos usam o limite de 5 litros para manter uma margem abaixo da borda.
 
 A água sai de uma torneira, passa por uma válvula solenoide de 12 V CC normalmente fechada e entra no tanque por uma conexão lateral próxima à base.

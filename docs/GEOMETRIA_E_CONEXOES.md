@@ -1,5 +1,7 @@
 # Geometria de exemplo e conexões elétricas
 
+[English](en/GEOMETRY_AND_WIRING.md) | [Português](GEOMETRIA_E_CONEXOES.md)
+
 As dimensões deste exemplo foram escolhidas para os cálculos e o desenho do conjunto. As pranchas estão disponíveis em PNG e SVG, com aparência de desenho CAD. Os arquivos são ilustrações técnicas, sem modelo DWG ou detalhamento de fabricação.
 
 ## Vista 3D

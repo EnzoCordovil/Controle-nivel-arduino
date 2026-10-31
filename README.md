@@ -4,9 +4,9 @@
 
 An Arduino Uno manages tank refilling using three capacitive level sensors. A solenoid valve controls the water inlet while the program monitors the level signals and filling time. When a fault is detected, the controller switches off the valve command and keeps the system locked until a manual reset.
 
-[![3D view of the tank assembly](docs/Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png)
+[![3D view of the tank assembly](docs/en/Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/en/Vista_3D_Conceitual.png)
 
-[Open the full-resolution 3D drawing](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png) · [SVG drawing](docs/Vista_3D_Conceitual.svg)
+[Open the full-resolution 3D drawing](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/en/Vista_3D_Conceitual.png) · [SVG drawing](docs/en/Vista_3D_Conceitual.svg)
 
 The example tank has internal dimensions of 200 × 125 × 230 mm. The overflow standpipe has an internal diameter of 50 mm and an external diameter of 54 mm. The level calculations account for the space occupied by the pipe, excluding flanges and other internal fittings.
 
@@ -21,11 +21,11 @@ The calculated net capacity is approximately 5.47 L. The calculations use a 5 L 
 
 ## Electrical connections
 
-[![Electrical connection diagram](docs/Diagrama_Eletrico.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png)
+[![Electrical connection diagram](docs/en/Diagrama_Eletrico.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/en/Diagrama_Eletrico.png)
 
-[Open the full-resolution wiring diagram](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png) · [SVG drawing](docs/Diagrama_Eletrico.svg)
+[Open the full-resolution wiring diagram](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/en/Diagrama_Eletrico.png) · [SVG drawing](docs/en/Diagrama_Eletrico.svg)
 
-Points with the same net label, such as `+5V`, `+12V_PROT`, or `GND`, are connected. The diagram identifies component functions and terminals; check the labels on the actual boards when wiring them. The [calculations and connection table](docs/GEOMETRIA_E_CONEXOES.md) provide the assembly details. Diagram labels and the detailed technical documents are in Portuguese.
+Points with the same net label, such as `+5V`, `+12V_PROT`, or `GND`, are connected. The diagram identifies component functions and terminals; check the labels on the actual boards when wiring them. The [calculations and connection table](docs/en/GEOMETRY_AND_WIRING.md) provide the assembly details.
 
 ## How it works
 
@@ -55,7 +55,7 @@ The sensors output LOW when they detect water. Their mounting positions set the 
 - Isolated 12 V power supply and regulated 5 V converter, sized for the actual load.
 - Example rectangular tank, manual drain, and open overflow standpipe with a reference internal diameter of 50 mm.
 
-The [assembly guide](LEIAME.md) covers power, polarity, and wiring. The valve receives power through the relay contacts, never from an Arduino pin.
+The [assembly guide](docs/en/ASSEMBLY.md) covers power, polarity, and wiring. The valve receives power through the relay contacts, never from an Arduino pin.
 
 ## Open in Arduino IDE
 
@@ -79,7 +79,7 @@ python3 tests/teste_extravasor.py
 python3 tests/teste_geometria_exemplo.py
 ```
 
-The tests run the sketch with simulated Arduino functions and EEPROM. They check state transitions, filling timeouts, manual reset, and lockout persistence after a restart. The [simulation report](RESULTADOS_SIMULACAO.md) describes filling and overflow scenarios and the assumptions used in each calculation.
+The tests run the sketch with simulated Arduino functions and EEPROM. They check state transitions, filling timeouts, manual reset, and lockout persistence after a restart. The [simulation report](docs/en/SIMULATION_RESULTS.md) describes filling and overflow scenarios and the assumptions used in each calculation.
 
 ## Design parameters
 
@@ -94,18 +94,18 @@ The tests run the sketch with simulated Arduino functions and EEPROM. They check
 | Timeout per filling stage | 35 s |
 | Overflow standpipe internal diameter | 50 mm |
 
-The calculation notes explain the geometric and hydraulic assumptions. The [simulation report](RESULTADOS_SIMULACAO.md) records the scenarios and the controller's response under each condition.
+The calculation notes explain the geometric and hydraulic assumptions. The [simulation report](docs/en/SIMULATION_RESULTS.md) records the scenarios and the controller's response under each condition.
 
 ## Technical documentation
 
-The documents below are in Portuguese; the drawings are available as vector files.
+English technical documents and vector drawings:
 
-- [Project description](DESCRICAO_PROJETO.md)
-- [Wiring and assembly instructions](LEIAME.md)
-- [Simulation results and assumptions](RESULTADOS_SIMULACAO.md)
-- [3D drawing in SVG format](docs/Vista_3D_Conceitual.svg)
-- [Electrical diagram in SVG format](docs/Diagrama_Eletrico.svg)
-- [Example geometry and connection table](docs/GEOMETRIA_E_CONEXOES.md)
-- [Earlier cross-section sketch without dimensions](docs/Desenho_Conceitual_Controle_Nivel.png)
+- [Project description](docs/en/PROJECT.md)
+- [Wiring and assembly instructions](docs/en/ASSEMBLY.md)
+- [Simulation results and assumptions](docs/en/SIMULATION_RESULTS.md)
+- [3D drawing in SVG format](docs/en/Vista_3D_Conceitual.svg)
+- [Electrical diagram in SVG format](docs/en/Diagrama_Eletrico.svg)
+- [Example geometry and connection table](docs/en/GEOMETRY_AND_WIRING.md)
+- [Earlier cross-section sketch without dimensions (Portuguese)](docs/Desenho_Conceitual_Controle_Nivel.png)
 
 Author: Enzo Castro Cordovil.

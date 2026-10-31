@@ -1,5 +1,7 @@
 # Resultados da simulação: tanque de 200 × 125 × 230 mm
 
+[English](docs/en/SIMULATION_RESULTS.md) | [Português](RESULTADOS_SIMULACAO.md)
+
 O modelo usa as dimensões de exemplo de 200 × 125 × 230 mm. O código do Arduino conserva os pinos, os volumes de referência e os prazos de 35 segundos. Em `tests/physical.cpp`, a área interna acima da borda do extravasor é de 0,025 m². O cálculo das alturas considera um tubo com 50 mm de diâmetro interno e 54 mm de diâmetro externo, conforme a [memória de cálculo](docs/GEOMETRIA_E_CONEXOES.md).
 
 ## Ensaios de 31/10/2026
