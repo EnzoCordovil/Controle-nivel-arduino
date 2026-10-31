@@ -45,8 +45,10 @@ arduino-cli compile --fqbn arduino:avr:uno --warnings all --output-dir build/uno
 
 A execução [Engineering verification](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/actions/runs/41200581064), sobre o commit `8169cd88a1f489e3e2310ccf8a2cd08cb6ddd415`, concluiu com sucesso a compilação para Uno, as simulações e o envio do artefato `engineering-evidence`. O sketch usa 3.928 bytes de programa (12%) e 387 bytes de RAM estática (18%), restando 1.661 bytes para variáveis locais e pilha. Essa folga não é uma medição do uso máximo da pilha. O compilador informou quatro avisos de parâmetro não utilizado em `new.cpp` do core Arduino 1.8.6; não houve erro de compilação. O [log de compilação](evidencias/compilacao_uno.txt) fica preservado no repositório. O artefato da execução contém binários, logs e hashes e está sujeito ao prazo de retenção do GitHub. As simulações repetidas no runner usaram Python 3.12.3 e g++ 13.3.0, mantendo os resultados registrados.
 
-## Alcance das conclusões
+## Escopo no portfólio
 
-Os resultados sustentam o comportamento do software e dos modelos nas condições declaradas. Não medem sensores, fonte, fechamento da válvula, vazamentos ou descarga de uma montagem. A compilação AVR verifica compatibilidade e geração do firmware; também não equivale a um ensaio físico. Resultados computacionais devem ser identificados como verificação por simulação ao serem usados no trabalho ou no portfólio.
+Este projeto de portfólio reúne desenvolvimento de firmware, dimensionamento elétrico e hidráulico, documentação e verificação computacional. Os resultados apresentados demonstram o comportamento do software e dos modelos nas condições declaradas, e a compilação AVR confirma a geração do firmware para Arduino Uno.
+
+A avaliação documentada compreende simulações e compilação. O funcionamento dos sensores na montagem, o comportamento da alimentação, o tempo real de fechamento da válvula, a vedação e a capacidade real de descarga estão fora do escopo experimental deste trabalho. Os valores obtidos nos modelos são resultados de simulação, sem medições em protótipo físico.
 
 O [dimensionamento elétrico](DIMENSIONAMENTO_ELETRICO.md) completa a configuração de referência, com corrente, fonte, conversor, condutores e proteção. Reservas de cálculo e verificações de seleção estão explicitadas para permitir reprodução e revisão técnica.
