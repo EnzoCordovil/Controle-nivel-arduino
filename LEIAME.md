@@ -1,8 +1,8 @@
-# Controle de nível — configuração revisada
+# Montagem e configuração do controle de nível
 
-Abra ControleNivel/ControleNivel.ino no Arduino IDE e selecione Arduino Uno R3 (ATmega328P). EEPROM acompanha Arduino AVR Boards. Sem bibliotecas externas.
+Abra `ControleNivel/ControleNivel.ino` no Arduino IDE e selecione Arduino Uno R3 (ATmega328P). A biblioteca EEPROM acompanha o pacote Arduino AVR Boards; o código não usa bibliotecas externas.
 
-## Configuração vigente
+## Pinos e níveis
 
 | Função | Volume de referência | Pino |
 |---|---:|---|
@@ -14,36 +14,53 @@ Abra ControleNivel/ControleNivel.ino no Arduino IDE e selecione Arduino Uno R3 (
 | LED de bloqueio | — | Integrado D13 |
 | Borda do tubo extravasor | 2,8 L | Sem comando elétrico |
 
-Sensores SEN0485, ativos em LOW: vermelho = VCC 5 V, preto = GND, verde = OUT. No exemplo de 200 × 125 × 230 mm internos, com tubo de 54 mm externos, as alturas calculadas dos sensores são 44,0 / 88,1 / 110,1 mm; a crista do extravasor fica em 123,3 mm. São dimensões escolhidas para o exemplo, não medições de um produto. Na montagem real, posicionar pelos volumes medidos após instalar o tubo interno, pois ele desloca água. Conferir alcance de detecção de 3 mm, espessura, fixação e interferências. Não converter diretamente litros em centímetros a partir das dimensões externas.
+Os sensores SEN0485 enviam LOW quando detectam água. O fio vermelho recebe 5 V, o preto vai ao GND e o verde leva o sinal OUT ao Arduino.
 
-Fonte externa isolada de 12 V / 1 A. Conversor fornece 5 V regulados, capacidade especificada de 1 A. Arduino pela USB; sensores e módulo relé em paralelo na distribuição de 5 V; GND comum do controle. Resistor de 10 kΩ de D7 para GND. Válvula de 12 V pelos contatos COM/NO, NC livre; retorno direto ao negativo da fonte. Diodo 1N4001 em paralelo com a bobina, faixa no positivo após NO. Nunca aplicar 12 V aos pinos de sinal/5 V ou à USB. Desconectar alimentação USB do conversor antes de conectar computador. Fechar proteção contra sobrecorrente e polaridade com a fonte e os fios concretos.
+No tanque de exemplo de 200 × 125 × 230 mm internos, com tubo de 54 mm de diâmetro externo, as alturas calculadas dos sensores são 44,0, 88,1 e 110,1 mm. A borda do extravasor fica a 123,3 mm. Essas dimensões foram escolhidas para o exemplo. Na montagem, ajuste as posições pelos volumes medidos com o tubo instalado, pois ele ocupa espaço dentro do tanque.
+
+O sensor tem alcance de detecção de 3 mm. Confira a espessura da parede, a fixação e possíveis interferências. Para calcular as alturas, use a geometria interna do tanque e o espaço ocupado pelas peças.
+
+## Alimentação e relé
+
+A referência de alimentação é uma fonte externa isolada de 12 V / 1 A e um conversor com saída regulada de 5 V / 1 A. O conversor alimenta o Arduino pela USB. Os sensores e o módulo relé recebem 5 V em paralelo, com GND comum ao controle.
+
+Ligue um resistor de 10 kΩ entre D7 e GND. A válvula de 12 V recebe alimentação pelos contatos COM e NO do relé, com retorno ao negativo da fonte. Deixe NC sem conexão. O diodo 1N4001 fica em paralelo com a bobina, com a faixa voltada para o positivo após o contato NO.
+
+Não aplique 12 V aos pinos de sinal, ao pino 5V ou à USB. Antes de conectar o computador, desconecte o cabo USB que vem do conversor. Dimensione a fonte, os condutores e a proteção contra sobrecorrente para a carga escolhida e confira a polaridade antes de energizar.
 
 ## Programa
 
-- Partida: pelo menos 1 s com relé desligado; aguarda sensores estáveis.
-- Inferior seco: inicia enchimento; superior encerra normalmente.
-- Entre níveis na partida: aguarda baixar; não força enchimento.
-- Primeiro prazo: 35 s até inferior detectar; segundo: 35 s da primeira detecção confirmada do inferior até superior. Sem reiniciar a segunda contagem por oscilação.
-- Sinal bruto do superior interrompe comando imediatamente; confirmação de 100 ms encerra ciclo.
-- Emergência D5 provoca bloqueio imediato, inclusive na partida; não espera filtro. Ruído pode causar bloqueio: inspecionar antes do rearme.
-- Superior molhado e inferior seco: bloqueio por inconsistência confirmada.
-- Botão: INPUT_PULLUP e filtro de 40 ms. Exige soltar após falha e depois apertar novamente. Sensores devem estar estáveis/coerentes e emergência inativa.
-- Bloqueio usa byte 0 da EEPROM e persiste após RESET ou desligamento. Gravação não é redundante ou tolerante a interrupção de energia durante a escrita.
-- Monitor Serial: 9600 baud.
+- Ao iniciar, o programa mantém o relé desligado por pelo menos 1 s e aguarda a estabilização dos sensores.
+- O enchimento começa com o sensor inferior seco e termina quando o superior detecta água. Se a partida ocorrer entre esses níveis, o programa aguarda a água baixar.
+- O primeiro prazo é de 35 s até a detecção do inferior. O segundo começa nessa primeira detecção confirmada e dura até 35 s para alcançar o superior. Oscilações do inferior não reiniciam essa contagem.
+- O sinal bruto do superior interrompe o comando imediatamente. Após 100 ms de confirmação, o programa encerra o ciclo.
+- A emergência em D5 bloqueia o sistema imediatamente, inclusive durante a partida. Essa entrada não aguarda o filtro; se houver acionamento por ruído, confira a causa antes de rearmar.
+- Se o superior indicar água e o inferior permanecer seco, a confirmação dessa combinação provoca bloqueio.
+- O botão usa INPUT_PULLUP e filtro de 40 ms. Após uma falha, é preciso soltá-lo e pressioná-lo novamente. O rearme exige sensores estáveis e coerentes, com a emergência inativa.
+- O bloqueio ocupa o byte 0 da EEPROM e permanece após RESET ou desligamento. A gravação não tem redundância nem proteção contra interrupção de energia durante a escrita.
+- O Monitor Serial usa 9600 baud.
 
 ## Prazos e vazões
 
-Os prazos anteriores de 65 s foram substituídos por 35 s. Para cada litro acrescentado com ganho líquido mínimo assumido de 2 L/min: 30 s + 5 s. Entrada de cálculo 3 a 12 L/min. A retirada deve manter ganho líquido de pelo menos 2 L/min para que os prazos sejam compatíveis. Retirada excessiva ou entrada abaixo dessa premissa podem gerar bloqueio por demora sem defeito dos sensores.
+Cada etapa tem prazo de 35 s. Acrescentar 1 litro com ganho líquido de 2 L/min leva 30 s; os 5 s restantes são a margem adotada. A faixa de entrada usada nos cálculos é de 3 a 12 L/min.
 
-## Extravasor revisado
+Se houver retirada de água durante o enchimento, o ganho líquido precisa continuar em pelo menos 2 L/min. Abaixo desse valor, o programa pode bloquear por demora mesmo com os sensores funcionando. O prazo anterior de 65 s foi substituído por esse ajuste de 35 s.
 
-A abertura circular alta na parede foi substituída por um tubo vertical aberto de 50 mm INTERNOS de referência, com crista em 2,8 L. DN comercial não garante esse diâmetro interno. Escoa por passagem estanque no fundo, sobre base preparada com vão, até descarte livre abaixo do tanque. Não usar registro, sifão, mangueira dobrada, saída submersa ou ligação direta fechada ao esgoto. Manter ventilação e saída visível. Trecho curto e descendente; inclinação de referência mínima de 1% nos trechos horizontais, desnível total de até 1 m. Confirmar vedação, compatibilidade e reforço/suporte da passagem no recipiente; não perfurar sem conferir o encaixe real.
+## Extravasor
 
-Modelo: capacidade de condução assumida de pelo menos 18 L/min e crista livre. Cálculo de Manning para tubo reto de 50 mm internos, meio cheio, n=0,015 e 1% de declividade dá cerca de 21,15 L/min, mas não valida curvas, entrada, trechos verticais ou conexão concreta. O teto de 18 L/min é hipótese de simulação, não capacidade medida. Verificar por ensaio e dimensionamento da montagem real.
+O extravasor é um tubo vertical aberto com diâmetro interno de referência de 50 mm e borda na altura de 2,8 L. Confira o diâmetro interno do produto escolhido: a bitola nominal DN, sozinha, não define essa medida.
+
+A descarga atravessa o fundo por uma conexão estanque e segue até um ponto de descarte abaixo do tanque. A base deve deixar espaço para a conexão. Mantenha o percurso curto e descendente, com inclinação de referência mínima de 1% nos trechos horizontais e desnível total de até 1 m.
+
+A saída precisa ficar livre, visível e ventilada. Evite registro, sifão, mangueira dobrada, saída submersa ou ligação direta fechada ao esgoto. Antes de perfurar, confira o encaixe das peças, a vedação e o suporte da passagem de fundo.
+
+O modelo considera a borda livre e capacidade de condução de pelo menos 18 L/min. Pela equação de Manning, um tubo reto de 50 mm internos, meio cheio, com n=0,015 e declividade de 1%, conduz cerca de 21,15 L/min. Esse cálculo não inclui as perdas em curvas, na entrada ou nas conexões. Os 18 L/min são uma hipótese da simulação; a capacidade da montagem depende do dimensionamento e do ensaio do percurso completo.
 
 ## Limitações
 
-Inferior travado indicando água pode impedir reposição sem alarme. Terceiro sensor compartilha Arduino/relé e não é circuito de segurança independente. Válvula travada depende do extravasor; se ele estiver obstruído ou subdimensionado, pode transbordar. Medidas internas, volume até borda, coeficientes de escoamento em baixa carga, fonte/temperatura e atrasos reais não estão fisicamente validados. O tubo interno desloca volume e deve caber com conexões, suporte e sensores.
+Se o sensor inferior travar indicando água, o tanque pode ficar sem reposição e sem alarme. O terceiro sensor compartilha o Arduino e o relé com os demais, portanto não forma um circuito de segurança independente. Se a válvula travar aberta, o escoamento depende do extravasor; uma obstrução ou capacidade insuficiente pode causar transbordamento.
+
+O tubo ocupa parte do volume e precisa caber junto com as conexões, os suportes e os sensores. As dimensões internas, o volume até a borda e os coeficientes de escoamento em baixa carga ainda não foram medidos na montagem. O mesmo vale para os atrasos reais e o comportamento da alimentação com a temperatura.
 
 ## Repetir simulação
 
@@ -56,5 +73,4 @@ Inferior travado indicando água pode impedir reposição sem alarme. Terceiro s
 
 Leia DESCRICAO_PROJETO.md e RESULTADOS_SIMULACAO.md. Compilação AVR e ensaio físico não foram realizados neste ambiente.
 
-
-Veja o [diagrama elétrico e memória de cálculo](docs/GEOMETRIA_E_CONEXOES.md). O esquema é funcional; conferir a identificação dos bornes no módulo concreto.
+Consulte o [diagrama elétrico e a memória de cálculo](docs/GEOMETRIA_E_CONEXOES.md). Na montagem, confira a identificação dos bornes no módulo escolhido.

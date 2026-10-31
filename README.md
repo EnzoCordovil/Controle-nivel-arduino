@@ -1,11 +1,12 @@
-# Sistema de Controle Automático de Nível de Água com Arduino
+# Controle automático de nível de água com Arduino
 
-Projeto de um sistema de controle automático de nível para um tanque de água, utilizando Arduino Uno, três sensores capacitivos e válvula solenoide. Inclui circuito elétrico, desenho 3D, dimensionamento hidráulico e código de controle com bloqueio persistente e rearme manual.
+O Arduino Uno controla a reposição de água no tanque a partir de três sensores capacitivos. Uma válvula solenoide abre a entrada de água, enquanto o programa acompanha os níveis e o tempo de enchimento. Em caso de falha, o sistema fecha a válvula e mantém o bloqueio até o rearme manual.
 
+[![Vista 3D do conjunto hidráulico](docs/Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png)
 
-![Vista 3D do conjunto hidráulico](docs/Vista_3D_Conceitual.png)
+[Abrir vista 3D em tamanho original](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png) · [Arquivo vetorial SVG](docs/Vista_3D_Conceitual.svg)
 
-**Geometria de exemplo:** reservatório retangular com dimensões internas de **200 × 125 × 230 mm**, escolhidas para este projeto. O extravasor de referência tem 50 mm internos e 54 mm externos. As alturas calculadas consideram o volume ocupado pelo tubo; conexões e flanges adicionais não foram descontados.
+O tanque de exemplo tem dimensões internas de 200 × 125 × 230 mm. O tubo extravasor tem 50 mm de diâmetro interno e 54 mm de diâmetro externo. O cálculo das alturas desconta o espaço ocupado pelo tubo, sem incluir flanges e outras conexões internas.
 
 | Referência | Volume | Altura calculada a partir do fundo interno |
 |---|---:|---:|
@@ -14,17 +15,21 @@ Projeto de um sistema de controle automático de nível para um tanque de água,
 | Emergência | 2,5 L | 110,1 mm |
 | Borda do extravasor | 2,8 L | 123,3 mm |
 
-A capacidade geométrica líquida do exemplo é aproximadamente 5,47 L. O limite de 5 L continua sendo uma referência conservadora de cálculo. Os desenhos do conjunto hidráulico e do circuito elétrico estão disponíveis em PNG e SVG.
+A capacidade líquida calculada é de aproximadamente 5,47 L. Os cálculos usam 5 L como limite, deixando uma margem abaixo da borda. Os desenhos estão disponíveis em PNG e SVG.
 
 ## Conexões elétricas
 
-![Esquema elétrico funcional](docs/Diagrama_Eletrico.png)
+[![Esquema elétrico funcional](docs/Diagrama_Eletrico.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png)
 
-O esquema usa redes nomeadas: todos os pontos `+5V`, `+12V_PROT` ou `GND` com o mesmo nome pertencem à mesma conexão. Os blocos indicam funções e terminais; não reproduzem a posição física dos conectores. Consulte a [memória de cálculo e a tabela de ligações](docs/GEOMETRIA_E_CONEXOES.md).
+[Abrir diagrama elétrico em tamanho original](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png) · [Arquivo vetorial SVG](docs/Diagrama_Eletrico.svg)
+
+Pontos com o mesmo rótulo, como `+5V`, `+12V_PROT` ou `GND`, estão ligados entre si. O desenho identifica as funções e os terminais de cada componente; a posição dos conectores deve ser conferida na placa. A [memória de cálculo e a tabela de ligações](docs/GEOMETRIA_E_CONEXOES.md) trazem os detalhes da montagem.
 
 ## Funcionamento
 
-A reposição começa abaixo do sensor inferior e termina ao atingir o superior. O sensor de emergência desliga o comando e bloqueia novas tentativas. Excesso de tempo ou sinais incompatíveis também provocam bloqueio, registrado na EEPROM e mantido após desligamento. O rearme depende de nova pressão do botão, emergência inativa e sinais coerentes.
+A reposição começa quando a água baixa do sensor inferior e termina ao alcançar o superior. Se a água atingir o sensor de emergência, o programa desliga o comando da válvula e bloqueia o enchimento. O mesmo acontece se o prazo for excedido ou os sensores apresentarem sinais incompatíveis.
+
+O bloqueio fica gravado na EEPROM e permanece após desligar a alimentação. Para rearmar, é preciso soltar e pressionar o botão novamente, com a emergência inativa e os sinais dos sensores coerentes.
 
 | Função | Referência | Pino |
 |---|---:|---|
@@ -36,7 +41,7 @@ A reposição começa abaixo do sensor inferior e termina ao atingir o superior.
 | Indicador de bloqueio | LED integrado | D13 |
 | Borda do extravasor vertical aberto | 2,8 L | Sem comando elétrico |
 
-Os sensores são ativos em LOW. Os volumes dependem da posição física dos sensores; o Arduino recebe sinais digitais e não mede litros diretamente. A supervisão usa 35 segundos por etapa, sob a premissa de ganho líquido mínimo de 2 L/min.
+Os sensores enviam LOW quando detectam água. A posição de cada sensor define o volume de referência; o Arduino recebe esse sinal digital. O programa acompanha cada etapa por até 35 segundos, calculados para um ganho líquido mínimo de 2 L/min.
 
 ## Componentes de referência
 
@@ -57,7 +62,7 @@ Confira alimentação, polaridade e montagem no [guia de montagem](LEIAME.md). A
 3. Selecione Arduino Uno e a porta correspondente.
 4. Compile o código e carregue na placa.
 
-A biblioteca EEPROM faz parte do pacote Arduino AVR Boards. O Monitor Serial usa 9600 baud.
+A biblioteca EEPROM acompanha o pacote Arduino AVR Boards. Configure o Monitor Serial para 9600 baud.
 
 ## Repetir as simulações
 
@@ -72,7 +77,7 @@ python3 tests/teste_extravasor.py
 python3 tests/teste_geometria_exemplo.py
 ```
 
-As funções Arduino e a EEPROM são simuladas. Os ensaios cobrem lógica de estados, temporização, rearme, persistência simulada, cenários de enchimento e hipóteses de extravasão. Veja as premissas e os resultados no [relatório de simulação](RESULTADOS_SIMULACAO.md).
+Os testes executam o código com funções Arduino e EEPROM simuladas. Eles verificam as mudanças de estado, os prazos de enchimento e o rearme, além da permanência do bloqueio após reinicialização. Os cenários de enchimento e extravasão estão descritos no [relatório de simulação](RESULTADOS_SIMULACAO.md), com as hipóteses usadas em cada cálculo.
 
 ## Parâmetros de dimensionamento
 

@@ -1,10 +1,10 @@
-# Resultados atuais — geometria de exemplo de 200 × 125 × 230 mm
+# Resultados da simulação: tanque de 200 × 125 × 230 mm
 
-A geometria foi escolhida como exemplo, sem vínculo com um recipiente comercial. O código do Arduino mantém os pinos, os volumes de referência e os prazos de 35 segundos. O modelo dinâmico em `tests/physical.cpp` foi atualizado para a área interna de 0,025 m² acima da crista. As alturas consideram tubo com 50 mm internos e 54 mm externos; veja [memória de cálculo](docs/GEOMETRIA_E_CONEXOES.md).
+O modelo usa as dimensões de exemplo de 200 × 125 × 230 mm. O código do Arduino conserva os pinos, os volumes de referência e os prazos de 35 segundos. Em `tests/physical.cpp`, a área interna acima da borda do extravasor é de 0,025 m². O cálculo das alturas considera um tubo com 50 mm de diâmetro interno e 54 mm de diâmetro externo, conforme a [memória de cálculo](docs/GEOMETRIA_E_CONEXOES.md).
 
-## Verificação repetida em 31/10/2026
+## Ensaios de 31/10/2026
 
-Compilação dos testes em C++11 com `-Wall -Wextra -Werror -fsanitize=undefined`; modelo dinâmico também com `-O1`. Os executáveis e os dois testes Python terminaram com código zero. Compilação AVR e ensaios físicos continuam pendentes.
+Os testes foram compilados em C++11 com `-Wall -Wextra -Werror -fsanitize=undefined`. O modelo dinâmico também usou `-O1`. Os executáveis e os dois testes Python terminaram com código zero. Esta execução não incluiu compilação AVR nem ensaios na montagem física.
 
 | Verificação | Resultado |
 |---|---|
@@ -20,17 +20,19 @@ Compilação dos testes em C++11 com `-Wall -Wextra -Werror -fsanitize=undefined
 | Válvula travada e extravasor obstruído | Modelo ultrapassa 5 L; limitação conhecida |
 | Inferior preso indicando água | Falta de reposição sem diagnóstico; limitação conhecida |
 
-O teste das geometrias históricas foi preservado, mas não representa as dimensões da nova vista 3D. Os números de 3,692 L e 4,216 L registrados abaixo pertencem ao modelo anterior. Para o exemplo atual, o volume geométrico até a borda é 5,468 L sem descontar flanges; 5 L é um limite conservador de cálculo. As hipóteses de Cd, capacidade de condução de pelo menos 18 L/min, ausência de afogamento e válvula com atraso de 300 ms continuam sem validação física.
+Os valores de 3,692 L e 4,216 L no registro histórico pertencem às geometrias anteriores. Esses testes foram mantidos para comparação. No exemplo atual, o volume calculado até a borda é de 5,468 L, sem descontar flanges, e o limite de cálculo permanece em 5 L.
+
+O modelo adota coeficientes Cd, capacidade de condução de pelo menos 18 L/min, descarga sem afogamento e atraso de fechamento de 300 ms. Esses parâmetros são hipóteses de cálculo, sem medição na montagem.
 
 ---
 
-# Registro histórico — geometria preliminar anterior
+## Registro histórico das geometrias anteriores
 
 ## Procedimento
 
-A versão candidata foi testada antes de substituir os arquivos entregues. O teste com timeout de 35 s falhou com o código anterior de 65 s, como esperado; depois da alteração passou. Executado o .ino em C++11 com funções Arduino e EEPROM simuladas, -Wall -Wextra -Werror e UndefinedBehaviorSanitizer. Sem compilação AVR ou validação física.
+A versão de 35 s foi testada antes de atualizar os arquivos. O teste do novo prazo falhou com o código anterior de 65 s e passou após a alteração. O arquivo .ino foi executado em C++11, com funções Arduino e EEPROM simuladas, -Wall -Wextra -Werror e UndefinedBehaviorSanitizer. Essa execução também não incluiu compilação AVR ou ensaio físico.
 
-Foram executados testes de lógica, 18 cenários dinâmicos, 210 combinações de vazão e volume inicial, dez ciclos completos e 100 combinações hidráulicas de sensibilidade. Todos cumpriram suas expectativas explícitas. Os testes de limites reproduzem problemas conhecidos e não representam aprovação dessas falhas.
+Os testes abrangeram a lógica do programa, 18 cenários dinâmicos, 210 combinações de vazão e volume inicial, dez ciclos completos e 100 combinações hidráulicas. Cada caso apresentou o resultado esperado. Nos testes de limites, esse resultado é a reprodução de uma falha conhecida, como o transbordamento com válvula travada e extravasor obstruído.
 
 ## Alterações consolidadas após os testes
 

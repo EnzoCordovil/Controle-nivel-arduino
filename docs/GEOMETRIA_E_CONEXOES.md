@@ -1,14 +1,16 @@
 # Geometria de exemplo e conexões elétricas
 
-As dimensões foram escolhidas para ilustrar e calcular o projeto. Não são medições de um recipiente existente. As pranchas têm aparência de desenho CAD, em PNG e SVG; não constituem arquivo AutoCAD DWG nem desenho de fabricação aprovado.
+As dimensões deste exemplo foram escolhidas para os cálculos e o desenho do conjunto. As pranchas estão disponíveis em PNG e SVG, com aparência de desenho CAD. Os arquivos são ilustrações técnicas, sem modelo DWG ou detalhamento de fabricação.
 
 ## Vista 3D
 
-![Conjunto hidráulico](Vista_3D_Conceitual.png)
+[![Conjunto hidráulico](Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png)
 
-Reservatório aberto e ventilado com dimensões **internas de 200 × 125 × 230 mm**. Paredes planas, material não metálico compatível com água e espessura compatível com o sensor (alcance especificado de 3 mm). A espessura estrutural não foi dimensionada; não se presume que uma parede de determinada espessura suporte a carga só por atender ao sensor.
+[Abrir vista 3D em tamanho original](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png)
 
-O tubo extravasor do exemplo tem 50 mm internos e 54 mm externos. Esses valores são hipóteses geométricas, não uma equivalência automática a uma bitola comercial. A crista é horizontal e aberta, com passagem estanque no fundo e descarga livre abaixo do tanque. Flanges, suportes e curvas devem caber na montagem real.
+O tanque é aberto e ventilado, com dimensões internas de 200 × 125 × 230 mm. As paredes devem ser planas, feitas de material não metálico compatível com água e com espessura que permita a detecção pelo sensor, cujo alcance é de 3 mm. A resistência da parede precisa de dimensionamento próprio: atender ao alcance do sensor não garante suporte à carga de água.
+
+O tubo extravasor tem 50 mm de diâmetro interno e 54 mm de diâmetro externo no exemplo. Confira essas duas medidas ao escolher uma bitola comercial. A borda superior é horizontal e aberta; a descarga passa por uma conexão estanque no fundo e termina livre, abaixo do tanque. Reserve espaço para flanges, suportes e curvas.
 
 Área interna: `A = 0,200 × 0,125 = 0,025 m²`.
 
@@ -25,7 +27,7 @@ Até 2,8 L: `h = V / (A − At)`. Acima da crista: `h = h_crista + (V − 0,0028
 | Limite conservador de cálculo | 5,0 L | 211,3 mm |
 | Borda geométrica | ~5,47 L | 230,0 mm |
 
-As alturas referem-se ao ponto de detecção, não ao centro de um furo. Os sensores são externos. Os corpos de S2 e S3 podem ser deslocados horizontalmente para evitar sobreposição; conferir interferência entre sensores e tubo. A crista fica acima de S3. A posição lateral de entrada, dreno e passagem de fundo no desenho é ilustrativa, sem gabarito de furação.
+As alturas indicam o ponto de detecção dos sensores, que ficam por fora do tanque. S2 e S3 podem ser deslocados horizontalmente para que os corpos não se sobreponham; confira também a interferência com o tubo. A borda do extravasor fica acima de S3. As posições laterais da entrada, do dreno e da passagem de fundo são ilustrativas e não definem um gabarito de furação.
 
 O volume bruto é 5,75 L; o tubo desloca aproximadamente 0,282 L até a crista. A capacidade geométrica líquida resulta em 5,468 L, sem descontar flanges ou outras peças internas. A nova geometria mantém os volumes de operação e os prazos do código. Na montagem, recalibrar com água e todas as conexões instaladas.
 
@@ -35,9 +37,11 @@ Execute `python3 tests/teste_geometria_exemplo.py` a partir da raiz. O teste hid
 
 ## Esquema elétrico
 
-![Conexões elétricas](Diagrama_Eletrico.png)
+[![Conexões elétricas](Diagrama_Eletrico.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png)
 
-Os rótulos de rede indicam conexões comuns. `GND` é o negativo CC comum da fonte, conversor, Arduino, sensores e módulo relé; não significa terra de proteção da rede elétrica. A posição de bornes nos blocos não reproduz a disposição física de cada placa. Usar as identificações impressas no hardware.
+[Abrir diagrama elétrico em tamanho original](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png)
+
+Pontos com o mesmo rótulo de rede estão conectados. `GND` é o negativo CC comum à fonte, ao conversor, ao Arduino, aos sensores e ao módulo relé. Ele não representa o terra de proteção da rede elétrica. Para localizar os bornes, siga as identificações impressas no hardware; os blocos do desenho mostram as funções, sem reproduzir a disposição física de cada placa.
 
 | Origem | Destino | Observação |
 |---|---|---|
@@ -59,7 +63,7 @@ Os rótulos de rede indicam conexões comuns. `GND` é o negativo CC comum da fo
 | D1 ânodo | Negativo da bobina | 1N4001 de referência; conferir adequação à válvula |
 | NC do relé | Sem conexão | Não confundir com válvula hidráulica normalmente fechada |
 
-Arduino alimentado por USB a partir de uma saída regulada de 5 V com conexão apropriada; não alimentar simultaneamente pela USB do conversor e do computador. Desconectar o cabo de alimentação do conversor antes de ligar a USB do PC. O esquema não injeta 12 V no pino 5V, em sinais ou na USB. Alimentação e proteção contra sobrecorrente precisam ser confirmadas conforme o hardware escolhido. A entrada de rede CA da fonte isolada fica fora do esquema.
+O Arduino recebe 5 V regulados pela USB, com cabo e conexão apropriados. Antes de ligar a USB do computador, desconecte a alimentação que vem do conversor. Não use as duas fontes USB ao mesmo tempo nem aplique 12 V ao pino 5V, aos sinais ou à USB. Dimensione a alimentação e a proteção contra sobrecorrente conforme o hardware escolhido. O esquema começa na saída CC da fonte isolada; a entrada de rede CA fica fora do desenho.
 
 O terceiro sensor usa o mesmo Arduino e relé e não é um circuito de segurança independente. O diagrama não elimina as limitações descritas no relatório, incluindo válvula presa, sensor inferior travado e extravasor obstruído.
 
