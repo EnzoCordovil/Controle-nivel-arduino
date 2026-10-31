@@ -81,3 +81,7 @@ O terceiro sensor usa o mesmo Arduino e relé e não é um circuito de seguranç
 - `python3 docs/gerar_diagramas.py` gera as imagens com Python, NumPy e Matplotlib.
 
 Os arquivos SVG são desenhos vetoriais. A vista é uma projeção 3D ilustrativa, sem um sólido paramétrico de CAD ou formato DWG.
+
+## Dimensionamento do circuito
+
+Os valores e as condições de seleção da fonte, conversor, válvula, fios e F1 estão em [DIMENSIONAMENTO_ELETRICO.md](DIMENSIONAMENTO_ELETRICO.md).

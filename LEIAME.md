@@ -76,3 +76,7 @@ O tubo ocupa parte do volume e precisa caber junto com as conexões, os suportes
 Leia DESCRICAO_PROJETO.md e RESULTADOS_SIMULACAO.md. Compilação AVR e ensaio físico não foram realizados neste ambiente.
 
 Consulte o [diagrama elétrico e a memória de cálculo](docs/GEOMETRIA_E_CONEXOES.md). Na montagem, confira a identificação dos bornes no módulo escolhido.
+
+## Configuração elétrica de referência
+
+Consulte [DIMENSIONAMENTO_ELETRICO.md](docs/DIMENSIONAMENTO_ELETRICO.md) para a seleção da válvula, fonte, conversor, condutores e F1, com orçamento de corrente e condições de aplicação.

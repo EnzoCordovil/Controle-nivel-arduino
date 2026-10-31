@@ -80,3 +80,7 @@ python3 tests/teste_geometria_exemplo.py
 Read the [project description](PROJECT.md) and [simulation results](SIMULATION_RESULTS.md). AVR compilation and physical testing were not performed in this environment.
 
 The [electrical diagram and calculation notes](GEOMETRY_AND_WIRING.md) provide the connection details. Check terminal labels on the selected hardware during assembly.
+
+## Electrical reference configuration
+
+See [ELECTRICAL_DESIGN.md](ELECTRICAL_DESIGN.md) for valve, supply, converter, conductor and F1 selection, including the current budget and application conditions.

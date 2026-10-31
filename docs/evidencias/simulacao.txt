@@ -1,0 +1,55 @@
+Software and hydraulic model verification
+2026-10-31T12:15:01Z
+500e459899a0b11b4aed3d9126d9acf1d363b688209859ccfe0785e8e7f47400  ControleNivel/ControleNivel.ino
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+Python 3.12.14
+PASS: emergencia imediata e rearme, ciclos, partida, 2 timeouts, prioridade superior, ruido, rearme, EEPROM, millis rollover
+PASS | normal 6 L/min | volume=2.030 L | max=2.030 L | bloqueado=0
+PASS | vazao menor: 3 L/min | volume=2.015 L | max=2.015 L | bloqueado=0
+PASS | entrada 3, saida 1 L/min: liquida 2 | volume=1.098 L | max=2.010 L | bloqueado=0
+PASS | 10 minutos com retirada simultanea | volume=1.071 L | max=2.025 L | bloqueado=0
+PASS | superior seco: emergencia 6 L/min | volume=2.530 L | max=2.530 L | bloqueado=1
+PASS | superior seco: emergencia 12 L/min | volume=2.560 L | max=2.560 L | bloqueado=1
+PASS | inferior e superior secos, emergencia funcional | volume=2.560 L | max=2.560 L | bloqueado=1
+PASS | inferior seco: inconsistencia no superior | volume=2.030 L | max=2.030 L | bloqueado=1
+PASS | emergencia seca: superior normal encerra | volume=2.030 L | max=2.030 L | bloqueado=0
+PASS | emergencia ativa na partida bloqueia | volume=0.000 L | max=0.000 L | bloqueado=1
+PASS | falta de agua: timeout | volume=0.000 L | max=0.000 L | bloqueado=1
+PASS | LIMITE: inferior preso molhado sem diagnostico | volume=0.000 L | max=0.000 L | bloqueado=0
+PASS | superior e emergencia secos: extravasor funcional | volume=2.800 L | max=3.063 L | bloqueado=1
+PASS | valvula travada: extravasor funcional | volume=2.966 L | max=2.966 L | bloqueado=1
+PASS | bloqueio persistente | volume=0.000 L | max=0.000 L | bloqueado=1
+PASS | dez ciclos completos | volume=2.030 L | max=2.030 L | bloqueado=0
+PASS | valvula travada a 12 L/min, extravasor ativo | volume=3.063 L | max=3.063 L | bloqueado=1
+PASS | LIMITE: valvula travada e extravasor obstruido | volume=6.000 L | max=6.000 L | bloqueado=1
+PASS | 210 combinacoes de vazao e volume inicial
+TOTAL: 18 cenarios explicitos + 210 combinacoes
+1.0 L -> 44.034 mm acima do fundo interno
+2.0 L -> 88.068 mm acima do fundo interno
+2.5 L -> 110.085 mm acima do fundo interno
+2.8 L -> 123.295 mm acima do fundo interno
+5.0 L -> 211.295 mm acima do fundo interno
+Volume bruto=5.750 L; deslocamento do tubo=0.282 L
+Volume líquido geométrico até a borda=5.468 L
+Cd=0.2: equilíbrio a 12 L/min=3.217 L
+Cd=0.3: equilíbrio a 12 L/min=3.118 L
+Cd=0.4: equilíbrio a 12 L/min=3.063 L
+Cd=0.5: equilíbrio a 12 L/min=3.026 L
+Cd=0.6: equilíbrio a 12 L/min=3.001 L
+PASS: 50 combinações do exemplo; maior equilíbrio=3.217 L
+Modelo ideal: paredes retas; tubo vertical livre; sem flanges no volume; sem afogamento.
+Requer verificar rigidez, conexões, espessura da parede, vazão e capacidade real de descarga.
+Conducao indicativa, meio cheio: 21.15 L/min; teto adotado no modelo: 18 L/min
+Area=848.70 cm2, Cd=0.2, equilibrio a 12 L/min=4.216 L
+Area=848.70 cm2, Cd=0.3, equilibrio a 12 L/min=3.881 L
+Area=848.70 cm2, Cd=0.4, equilibrio a 12 L/min=3.692 L
+Area=848.70 cm2, Cd=0.5, equilibrio a 12 L/min=3.569 L
+Area=848.70 cm2, Cd=0.6, equilibrio a 12 L/min=3.481 L
+Area=438.60 cm2, Cd=0.2, equilibrio a 12 L/min=3.532 L
+Area=438.60 cm2, Cd=0.3, equilibrio a 12 L/min=3.359 L
+Area=438.60 cm2, Cd=0.4, equilibrio a 12 L/min=3.261 L
+Area=438.60 cm2, Cd=0.5, equilibrio a 12 L/min=3.197 L
+Area=438.60 cm2, Cd=0.6, equilibrio a 12 L/min=3.152 L
+PASS: 100 combinacoes hidraulicas idealizadas; maior volume de equilibrio=4.216 L
+Premissas: 5 L ate borda, tubo 50 mm INTERNOS, crista livre e ventilada, descarga nao afogada, conducao >=18 L/min.
+Coeficientes a baixa carga sao incertos. As perdas locais, obstrucao, encaixe e dimensoes reais nao foram validados.

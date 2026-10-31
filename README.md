@@ -109,3 +109,11 @@ English technical documents and vector drawings:
 - [Earlier cross-section sketch without dimensions (Portuguese)](docs/Desenho_Conceitual_Controle_Nivel.png)
 
 Author: Enzo Castro Cordovil.
+
+## Engineering verification
+
+- [Electrical design and component selection](docs/en/ELECTRICAL_DESIGN.md)
+- [Verification record and scope](docs/en/ENGINEERING_VERIFICATION.md)
+- [Recorded simulation output](docs/evidencias/simulacao.txt)
+
+Run `bash tests/run_checks.sh` to reproduce the recorded software and hydraulic checks. An Arduino Uno compilation workflow is prepared in `.github/workflows/verify.yml`; AVR compilation is only established after a successful run.

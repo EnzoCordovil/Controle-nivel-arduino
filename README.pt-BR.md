@@ -107,3 +107,11 @@ A memória de cálculo apresenta as hipóteses geométricas e hidráulicas adota
 - [Esboço anterior em corte — sem cotas](docs/Desenho_Conceitual_Controle_Nivel.png)
 
 Autor: Enzo Castro Cordovil.
+
+## Verificação de engenharia
+
+- [Dimensionamento elétrico e componentes](docs/DIMENSIONAMENTO_ELETRICO.md)
+- [Registro de verificação e alcance dos resultados](docs/VERIFICACAO_ENGENHARIA.md)
+- [Saída registrada da simulação](docs/evidencias/simulacao.txt)
+
+Execute `bash tests/run_checks.sh` para reproduzir os ensaios de software e hidráulica. A rotina de compilação para Arduino Uno está preparada em `.github/workflows/verify.yml`; a compilação AVR só estará comprovada após uma execução concluída com sucesso.

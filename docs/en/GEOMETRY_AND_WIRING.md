@@ -82,3 +82,7 @@ The third sensor shares the Arduino and relay and is not an independent safety c
 - Run `python3 docs/gerar_diagramas.py` to generate the Portuguese drawings.
 
 SVG files are vector drawings. The 3D view is an illustrative projection without a parametric CAD solid or DWG file.
+
+## Circuit sizing
+
+Reference ratings and selection conditions for the supply, converter, valve, wires and F1 are specified in [ELECTRICAL_DESIGN.md](ELECTRICAL_DESIGN.md).

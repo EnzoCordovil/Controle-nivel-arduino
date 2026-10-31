@@ -1,0 +1,34 @@
+name: Engineering verification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/setup-arduino-cli@v2
+        with:
+          version: '1.2.2'
+      - name: Install Arduino AVR Boards
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr@1.8.6
+      - name: Run controller and hydraulic simulations
+        run: bash tests/run_checks.sh
+      - name: Compile for Arduino Uno
+        shell: bash
+        run: |
+          set -euo pipefail
+          arduino-cli version | tee build/evidence/toolchain.txt
+          arduino-cli core list | tee -a build/evidence/toolchain.txt
+          arduino-cli compile --fqbn arduino:avr:uno --warnings all --output-dir build/uno ControleNivel 2>&1 | tee build/evidence/uno-compile.txt
+          sha256sum ControleNivel/ControleNivel.ino build/uno/* > build/evidence/sha256.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: engineering-evidence
+          path: build/
