@@ -2,6 +2,8 @@
 
 [English](README.md) | [Português](README.pt-BR.md)
 
+A Control and Automation Engineering portfolio project covering firmware development, electrical and hydraulic design, and simulation-based verification of an automatic tank-refilling system.
+
 An Arduino Uno manages tank refilling using three capacitive level sensors. A solenoid valve controls the water inlet while the program monitors the level signals and filling time. When a fault is detected, the controller switches off the valve command and keeps the system locked until a manual reset.
 
 [![3D view of the tank assembly](docs/en/Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/en/Vista_3D_Conceitual.png)
@@ -18,6 +20,12 @@ The example tank has internal dimensions of 200 × 125 × 230 mm. The overflow s
 | Overflow standpipe rim | 2.8 L | 123.3 mm |
 
 The calculated net capacity is approximately 5.47 L. The calculations use a 5 L limit to leave a margin below the tank rim. Drawings are available in PNG and SVG formats.
+
+## Development and results
+
+The work brings together operating-level definitions, control and lockout programming, reference component selection, and tank and overflow calculations. Drawings, calculation notes and reproducible tests document the design decisions.
+
+Arduino Uno compilation completed successfully. The dynamic model covered 18 scenarios and 210 operating combinations that met their assertions, including cases that demonstrate system limitations. The current geometry was also evaluated across 50 hydraulic combinations. Methods, assumptions and records are linked in the verification section.
 
 ## Electrical connections
 
