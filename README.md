@@ -1,72 +1,74 @@
-# Controle automático de nível de água com Arduino
+# Automatic water level control with Arduino
 
-O Arduino Uno controla a reposição de água no tanque a partir de três sensores capacitivos. Uma válvula solenoide abre a entrada de água, enquanto o programa acompanha os níveis e o tempo de enchimento. Em caso de falha, o sistema fecha a válvula e mantém o bloqueio até o rearme manual.
+[English](README.md) | [Português](README.pt-BR.md)
 
-[![Vista 3D do conjunto hidráulico](docs/Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png)
+An Arduino Uno manages tank refilling using three capacitive level sensors. A solenoid valve controls the water inlet while the program monitors the level signals and filling time. When a fault is detected, the controller switches off the valve command and keeps the system locked until a manual reset.
 
-[Abrir vista 3D em tamanho original](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png) · [Arquivo vetorial SVG](docs/Vista_3D_Conceitual.svg)
+[![3D view of the tank assembly](docs/Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png)
 
-O tanque de exemplo tem dimensões internas de 200 × 125 × 230 mm. O tubo extravasor tem 50 mm de diâmetro interno e 54 mm de diâmetro externo. O cálculo das alturas desconta o espaço ocupado pelo tubo, sem incluir flanges e outras conexões internas.
+[Open the full-resolution 3D drawing](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png) · [SVG drawing](docs/Vista_3D_Conceitual.svg)
 
-| Referência | Volume | Altura calculada a partir do fundo interno |
+The example tank has internal dimensions of 200 × 125 × 230 mm. The overflow standpipe has an internal diameter of 50 mm and an external diameter of 54 mm. The level calculations account for the space occupied by the pipe, excluding flanges and other internal fittings.
+
+| Reference | Water volume | Calculated height above the internal tank floor |
 |---|---:|---:|
-| Sensor inferior | 1,0 L | 44,0 mm |
-| Sensor superior | 2,0 L | 88,1 mm |
-| Emergência | 2,5 L | 110,1 mm |
-| Borda do extravasor | 2,8 L | 123,3 mm |
+| Lower sensor | 1.0 L | 44.0 mm |
+| Upper sensor | 2.0 L | 88.1 mm |
+| Emergency sensor | 2.5 L | 110.1 mm |
+| Overflow standpipe rim | 2.8 L | 123.3 mm |
 
-A capacidade líquida calculada é de aproximadamente 5,47 L. Os cálculos usam 5 L como limite, deixando uma margem abaixo da borda. Os desenhos estão disponíveis em PNG e SVG.
+The calculated net capacity is approximately 5.47 L. The calculations use a 5 L limit to leave a margin below the tank rim. Drawings are available in PNG and SVG formats.
 
-## Conexões elétricas
+## Electrical connections
 
-[![Esquema elétrico funcional](docs/Diagrama_Eletrico.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png)
+[![Electrical connection diagram](docs/Diagrama_Eletrico.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png)
 
-[Abrir diagrama elétrico em tamanho original](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png) · [Arquivo vetorial SVG](docs/Diagrama_Eletrico.svg)
+[Open the full-resolution wiring diagram](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Diagrama_Eletrico.png) · [SVG drawing](docs/Diagrama_Eletrico.svg)
 
-Pontos com o mesmo rótulo, como `+5V`, `+12V_PROT` ou `GND`, estão ligados entre si. O desenho identifica as funções e os terminais de cada componente; a posição dos conectores deve ser conferida na placa. A [memória de cálculo e a tabela de ligações](docs/GEOMETRIA_E_CONEXOES.md) trazem os detalhes da montagem.
+Points with the same net label, such as `+5V`, `+12V_PROT`, or `GND`, are connected. The diagram identifies component functions and terminals; check the labels on the actual boards when wiring them. The [calculations and connection table](docs/GEOMETRIA_E_CONEXOES.md) provide the assembly details. Diagram labels and the detailed technical documents are in Portuguese.
 
-## Funcionamento
+## How it works
 
-A reposição começa quando a água baixa do sensor inferior e termina ao alcançar o superior. Se a água atingir o sensor de emergência, o programa desliga o comando da válvula e bloqueia o enchimento. O mesmo acontece se o prazo for excedido ou os sensores apresentarem sinais incompatíveis.
+Refilling starts when the water drops below the lower sensor and stops when it reaches the upper sensor. If the emergency sensor detects water, the program switches off the valve command and locks out further filling. A filling timeout or inconsistent sensor signals also trigger a lockout.
 
-O bloqueio fica gravado na EEPROM e permanece após desligar a alimentação. Para rearmar, é preciso soltar e pressionar o botão novamente, com a emergência inativa e os sinais dos sensores coerentes.
+The lockout is stored in EEPROM and survives a power cycle. To reset it, release and press the reset button again while the emergency sensor is inactive and the level signals are consistent.
 
-| Função | Referência | Pino |
+| Function | Reference | Pin |
 |---|---:|---|
-| Iniciar reposição | 1 L | D2 |
-| Encerrar reposição | 2 L | D3 |
-| Emergência | 2,5 L | D5 |
-| Botão de rearme | Normalmente aberto | D4 e GND |
-| Comando do relé | Ativo em HIGH | D7 |
-| Indicador de bloqueio | LED integrado | D13 |
-| Borda do extravasor vertical aberto | 2,8 L | Sem comando elétrico |
+| Start refilling | 1 L | D2 |
+| Stop refilling | 2 L | D3 |
+| Emergency shutdown | 2.5 L | D5 |
+| Manual reset button | Normally open | D4 to GND |
+| Relay control | Active HIGH | D7 |
+| Fault indicator | Built-in LED | D13 |
+| Overflow standpipe rim | 2.8 L | Passive hydraulic outlet |
 
-Os sensores enviam LOW quando detectam água. A posição de cada sensor define o volume de referência; o Arduino recebe esse sinal digital. O programa acompanha cada etapa por até 35 segundos, calculados para um ganho líquido mínimo de 2 L/min.
+The sensors output LOW when they detect water. Their mounting positions set the reference volumes; the Arduino reads digital signals. Each filling stage has a 35-second timeout, calculated for a minimum net inflow of 2 L/min.
 
-## Componentes de referência
+## Reference components
 
 - Arduino Uno R3 (ATmega328P).
-- Três sensores capacitivos SEN0485.
-- Módulo relé DFR0017 com comando ativo em HIGH.
-- Válvula solenoide normalmente fechada de 12 V CC.
-- Botão momentâneo, resistor de 10 kΩ e diodo 1N4001.
-- Fonte isolada de 12 V e conversor regulado de 5 V, a confirmar conforme os consumos reais.
-- Reservatório retangular de exemplo, dreno manual e extravasor vertical aberto de referência de 50 mm internos.
+- Three SEN0485 capacitive level sensors.
+- DFR0017 relay module with active-HIGH control.
+- Normally closed 12 V DC solenoid valve.
+- Momentary push button, 10 kΩ resistor, and 1N4001 diode.
+- Isolated 12 V power supply and regulated 5 V converter, sized for the actual load.
+- Example rectangular tank, manual drain, and open overflow standpipe with a reference internal diameter of 50 mm.
 
-Confira alimentação, polaridade e montagem no [guia de montagem](LEIAME.md). A válvula é alimentada pelos contatos do relé; nunca por um pino do Arduino.
+The [assembly guide](LEIAME.md) covers power, polarity, and wiring. The valve receives power through the relay contacts, never from an Arduino pin.
 
-## Abrir no Arduino IDE
+## Open in Arduino IDE
 
-1. Baixe ou clone este repositório.
-2. Abra [ControleNivel/ControleNivel.ino](ControleNivel/ControleNivel.ino).
-3. Selecione Arduino Uno e a porta correspondente.
-4. Compile o código e carregue na placa.
+1. Download or clone this repository.
+2. Open [ControleNivel/ControleNivel.ino](ControleNivel/ControleNivel.ino).
+3. Select Arduino Uno and the appropriate port.
+4. Compile the sketch and upload it to the board.
 
-A biblioteca EEPROM acompanha o pacote Arduino AVR Boards. Configure o Monitor Serial para 9600 baud.
+The EEPROM library is included with Arduino AVR Boards. Set the Serial Monitor to 9600 baud.
 
-## Repetir as simulações
+## Run the simulations
 
-Requer g++ com suporte a C++11 e Python 3. Execute na raiz do repositório:
+You need g++ with C++11 support and Python 3. Run these commands from the repository root:
 
 ```bash
 g++ -std=c++11 -Wall -Wextra -Werror -fsanitize=undefined -Itests tests/test.cpp -o teste_logica
@@ -77,31 +79,33 @@ python3 tests/teste_extravasor.py
 python3 tests/teste_geometria_exemplo.py
 ```
 
-Os testes executam o código com funções Arduino e EEPROM simuladas. Eles verificam as mudanças de estado, os prazos de enchimento e o rearme, além da permanência do bloqueio após reinicialização. Os cenários de enchimento e extravasão estão descritos no [relatório de simulação](RESULTADOS_SIMULACAO.md), com as hipóteses usadas em cada cálculo.
+The tests run the sketch with simulated Arduino functions and EEPROM. They check state transitions, filling timeouts, manual reset, and lockout persistence after a restart. The [simulation report](RESULTADOS_SIMULACAO.md) describes filling and overflow scenarios and the assumptions used in each calculation.
 
-## Parâmetros de dimensionamento
+## Design parameters
 
-| Parâmetro | Valor adotado |
+| Parameter | Design value |
 |---|---:|
-| Dimensões internas do tanque de exemplo | 200 × 125 × 230 mm |
-| Volume de operação | 1 a 2 L |
-| Nível de emergência | 2,5 L |
-| Início de extravasão | 2,8 L |
-| Vazão máxima de entrada no modelo | 12 L/min |
-| Ganho líquido mínimo para os prazos | 2 L/min |
-| Supervisão por etapa | 35 s |
-| Diâmetro interno do extravasor | 50 mm |
+| Internal dimensions of the example tank | 200 × 125 × 230 mm |
+| Operating volume range | 1 to 2 L |
+| Emergency level | 2.5 L |
+| Overflow onset | 2.8 L |
+| Maximum inlet flow in the model | 12 L/min |
+| Minimum net inflow for the timeouts | 2 L/min |
+| Timeout per filling stage | 35 s |
+| Overflow standpipe internal diameter | 50 mm |
 
-A memória de cálculo apresenta as hipóteses geométricas e hidráulicas adotadas. O [relatório de simulação](RESULTADOS_SIMULACAO.md) reúne os cenários analisados e o comportamento do sistema em cada condição.
+The calculation notes explain the geometric and hydraulic assumptions. The [simulation report](RESULTADOS_SIMULACAO.md) records the scenarios and the controller's response under each condition.
 
-## Documentação
+## Technical documentation
 
-- [Descrição do projeto](DESCRICAO_PROJETO.md)
-- [Ligações e instruções](LEIAME.md)
-- [Resultados e hipóteses da simulação](RESULTADOS_SIMULACAO.md)
-- [Vista 3D em SVG](docs/Vista_3D_Conceitual.svg)
-- [Esquema elétrico em SVG](docs/Diagrama_Eletrico.svg)
-- [Geometria de exemplo e ligações](docs/GEOMETRIA_E_CONEXOES.md)
-- [Esboço anterior em corte — sem cotas](docs/Desenho_Conceitual_Controle_Nivel.png)
+The documents below are in Portuguese; the drawings are available as vector files.
 
-Autor: Enzo Castro Cordovil.
+- [Project description](DESCRICAO_PROJETO.md)
+- [Wiring and assembly instructions](LEIAME.md)
+- [Simulation results and assumptions](RESULTADOS_SIMULACAO.md)
+- [3D drawing in SVG format](docs/Vista_3D_Conceitual.svg)
+- [Electrical diagram in SVG format](docs/Diagrama_Eletrico.svg)
+- [Example geometry and connection table](docs/GEOMETRIA_E_CONEXOES.md)
+- [Earlier cross-section sketch without dimensions](docs/Desenho_Conceitual_Controle_Nivel.png)
+
+Author: Enzo Castro Cordovil.
