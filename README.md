@@ -6,9 +6,9 @@ A Control and Automation Engineering portfolio project covering firmware develop
 
 An Arduino Uno manages tank refilling using three capacitive level sensors. A solenoid valve controls the water inlet while the program monitors the level signals and filling time. When a fault is detected, the controller switches off the valve command and keeps the system locked until a manual reset.
 
-[![3D view of the tank assembly](docs/en/Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/en/Vista_3D_Conceitual.png)
+[![Conceptual 3D rendering of the tank assembly](docs/maquete-reservatorio-revisada.jpg)](docs/maquete-reservatorio-revisada.jpg)
 
-[Open the full-resolution 3D drawing](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/en/Vista_3D_Conceitual.png) · [SVG drawing](docs/en/Vista_3D_Conceitual.svg)
+[Open full-size rendering](docs/maquete-reservatorio-revisada.jpg) · [Technical drawing (SVG)](docs/en/Vista_3D_Conceitual.svg)
 
 The example tank has internal dimensions of 200 × 125 × 230 mm. The overflow standpipe has an internal diameter of 50 mm and an external diameter of 54 mm. The level calculations account for the space occupied by the pipe, excluding flanges and other internal fittings.
 

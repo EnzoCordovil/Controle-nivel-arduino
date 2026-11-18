@@ -6,9 +6,9 @@ Projeto de portfólio em Engenharia de Controle e Automação que reúne o desen
 
 O Arduino Uno controla a reposição de água no tanque a partir de três sensores capacitivos. Uma válvula solenoide abre a entrada de água, enquanto o programa acompanha os níveis e o tempo de enchimento. Em caso de falha, o sistema fecha a válvula e mantém o bloqueio até o rearme manual.
 
-[![Vista 3D do conjunto hidráulico](docs/Vista_3D_Conceitual.png)](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png)
+[![Maquete 3D conceitual do reservatório](docs/maquete-reservatorio-revisada.jpg)](docs/maquete-reservatorio-revisada.jpg)
 
-[Abrir vista 3D em tamanho original](https://github.com/EnzoCastro-neko/controle-nivel-agua-arduino/raw/refs/heads/main/docs/Vista_3D_Conceitual.png) · [Arquivo vetorial SVG](docs/Vista_3D_Conceitual.svg)
+[Abrir maquete em tamanho original](docs/maquete-reservatorio-revisada.jpg) · [Desenho técnico (SVG)](docs/Vista_3D_Conceitual.svg)
 
 O tanque de exemplo tem dimensões internas de 200 × 125 × 230 mm. O tubo extravasor tem 50 mm de diâmetro interno e 54 mm de diâmetro externo. O cálculo das alturas desconta o espaço ocupado pelo tubo, sem incluir flanges e outras conexões internas.
 
